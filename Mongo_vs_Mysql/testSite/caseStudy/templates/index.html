@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Case Study Data</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+
+<h1>Case Study - RDBMS vs NoSQL</h1>
+<div style="width:98%">
+  <select id="geolocation_dropdown" style="width:200px;height:30px;" />
+  <input type="radio" name="dbtype" style="margin-left:20px;" checked="checked" value="mongo">MongoDB</input>
+  <input type="radio" name="dbtype" style="margin-left:10px;" value="mysql">MySQL</input>
+  <button onclick="getResultData()" style="margin-left:25px;">Search</button>
+    <p id="responseTime" style="width:300px;font-weight:bold;"></p>
+</div>
+
+<div id="resultDiv" style="width:98%;margin-top:20px;"></div>
+</body>
+
+<script>
+$(document).ready(function(){
+  $.get(
+    "/caseStudy" ,
+    function(data){
+      $.each(data.locations, function(index,keyvalue){
+        var newOptionObj = $( '<option>' , { value : keyvalue , html : keyvalue} );
+        $("#geolocation_dropdown").append(newOptionObj);
+       console.log(keyvalue);
+       });
+    }
+  )
+});
+function getResultData()
+{
+  var geolocation = $("#geolocation_dropdown").val()
+  var dbtype = $("[name='dbtype']:checked").val()
+  $.get(
+    '/caseStudy/?location='+geolocation+"&dbtype="+dbtype,
+    function(data){
+      $("#resultDiv").html(JSON.stringify(data.response_data));
+      $("#responseTime").html(" Response time :" + data.millis + " ms");
+    }
+
+  );
+}
+
+</script>
+</html>

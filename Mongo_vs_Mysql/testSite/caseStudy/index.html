@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Case Study Data</title>
+ <script src="jquery-3.4.1.min.js"></script>
+</head>
+<body>
+
+
+<h1>Case Study - MySQL vs NoSQL</h1>
+<select id="geolocation_dropdown" style="width:200px;height:30px;" />
+
+</body>
+
+<script>
+$(document).ready(function(){
+  $.get(
+    "http://127.0.0.1:8000/caseStudy" ,
+    function(data){
+      alert(data);
+    }
+  )
+});
+</script>
+</html>
